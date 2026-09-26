@@ -450,6 +450,11 @@ public class MediaCodecHelper {
         initialized = true;
     }
 
+    private static boolean mustAvoidAndroidRLowLatency(MediaCodecInfo decoderInfo, String mimeType) {
+        return(MediaFormat.MIMETYPE_VIDEO_HEVC.equalsIgnoreCase(mimeType) &&
+                decoderInfo.getName().equalsIgnoreCase("c2.amlogic.hevc.decoder"));
+    }
+
     private static boolean isDecoderInList(List<String> decoderList, String decoderName) {
         if (!initialized) {
             throw new IllegalStateException("MediaCodecHelper must be initialized before use");
@@ -545,7 +550,11 @@ public class MediaCodecHelper {
             safeSet(videoFormat, "vendor.nvidia.disable-output-reorder", 1);
             setNewOption = true;
         }
-        if (tryNumber < 1) {
+        if (tryNumber < 1 && mustAvoidAndroidRLowLatency(decoderInfo, videoFormat.getString(MediaFormat.KEY_MIME))) {
+            // Fall through to vdec-lowlatency and the Amlogic vendor extension below.
+            LimeLog.info("Skipping KEY_LOW_LATENCY for Amlogic S905X5-class HEVC decoder");
+        }
+        else if (tryNumber < 1) {
             // Official Android 11+ low latency option (KEY_LOW_LATENCY).
             videoFormat.setInteger("low-latency", 1);
             setNewOption = true;

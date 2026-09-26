@@ -552,7 +552,7 @@ public class MediaCodecHelper {
         }
         if (tryNumber < 1 && mustAvoidAndroidRLowLatency(decoderInfo, videoFormat.getString(MediaFormat.KEY_MIME))) {
             // Fall through to vdec-lowlatency and the Amlogic vendor extension below.
-            LimeLog.info("Skipping KEY_LOW_LATENCY for Amlogic S905X5-class HEVC decoder");
+            LimeLog.info("Skipping KEY_LOW_LATENCY for Amlogic HEVC decoder");
         }
         else if (tryNumber < 1) {
             // Official Android 11+ low latency option (KEY_LOW_LATENCY).

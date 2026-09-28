@@ -153,7 +153,7 @@ public class MediaCodecDecoderRenderer extends VideoDecoderRenderer implements C
     private volatile long lastStallRecoveryMs;
     private volatile boolean watchdogRecoveryRequested;
 
-    private static final long STALL_WATCHDOG_TIMEOUT_MS = 3000;
+    private static final long STALL_WATCHDOG_TIMEOUT_MS = 5000;
     private static final long STALL_WATCHDOG_ACTIVE_INPUT_WINDOW_MS = 1000;
     private static final long STALL_WATCHDOG_RECOVERY_COOLDOWN_MS = 10000;
 

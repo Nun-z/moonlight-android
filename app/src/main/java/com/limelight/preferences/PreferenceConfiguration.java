@@ -97,6 +97,9 @@ public class PreferenceConfiguration {
 
     private static final String ENABLE_RUMBLE_PREF_STRING = "checkbox_enable_rumble";
     private static final String PREVENT_PACKET_LOSS_PREF_STRING = "checkbox_prevent_packet_loss";
+    private static final String DISABLE_HEVC_RFI_PREF_STRING = "checkbox_disable_hevc_rfi";
+    private static final String HEVC_STALL_WATCHDOG_PREF_STRING = "checkbox_hevc_stall_watchdog";
+    private static final String NONBLOCKING_OUTPUT_QUEUE_PREF_STRING = "checkbox_nonblocking_output_queue";
 
     private static final String LIST_ONSCREEN_KEYBOARD_ALIGN_MODE = "list_onscreen_keyboard_align_mode";
 
@@ -191,6 +194,11 @@ public class PreferenceConfiguration {
     private static final boolean DEFAULT_FORCE_MOTION_SENSORS_FALLBACK = false;
     private static final boolean DEFAULT_ENABLE_RUMBLE = true;
     private static final boolean DEFAULT_PREVENT_PACKET_LOSS = false;
+    // Device-specific workarounds. Every one of these defaults to stock behavior,
+    // so an untouched installation is indistinguishable from upstream.
+    private static final boolean DEFAULT_DISABLE_HEVC_RFI = false;
+    private static final boolean DEFAULT_HEVC_STALL_WATCHDOG = false;
+    private static final boolean DEFAULT_NONBLOCKING_OUTPUT_QUEUE = false;
     private static final boolean DEFAULT_GAMEPAD_ENABLE_BATTERY_REPORT = true;
     private static final boolean DEFAULT_FORCE_QWERTY = true;
     private static final boolean DEFAULT_SEND_META_ON_PHYSICAL_BACK = false;
@@ -379,6 +387,11 @@ public class PreferenceConfiguration {
     public boolean forceMotionSensorsFallbackToDevice;
     public boolean enableRumble;
     public boolean preventPacketLoss;
+
+    // Device-specific workarounds
+    public boolean disableHevcRfi;
+    public boolean hevcStallWatchdog;
+    public boolean nonblockingOutputQueue;
 
     public boolean rememberZoomPan;
     public float zoomScale;
@@ -1025,6 +1038,11 @@ private static int getFramePacingValue(Context context) {
         config.forceMotionSensorsFallbackToDevice = prefs.getBoolean(FORCE_MOTION_SENSORS_FALLBACK_PREF_STRING, DEFAULT_FORCE_MOTION_SENSORS_FALLBACK);
         config.enableRumble = prefs.getBoolean(ENABLE_RUMBLE_PREF_STRING, DEFAULT_ENABLE_RUMBLE);
         config.preventPacketLoss = prefs.getBoolean(PREVENT_PACKET_LOSS_PREF_STRING, DEFAULT_PREVENT_PACKET_LOSS);
+
+        // Device-specific workarounds
+        config.disableHevcRfi = prefs.getBoolean(DISABLE_HEVC_RFI_PREF_STRING, DEFAULT_DISABLE_HEVC_RFI);
+        config.hevcStallWatchdog = prefs.getBoolean(HEVC_STALL_WATCHDOG_PREF_STRING, DEFAULT_HEVC_STALL_WATCHDOG);
+        config.nonblockingOutputQueue = prefs.getBoolean(NONBLOCKING_OUTPUT_QUEUE_PREF_STRING, DEFAULT_NONBLOCKING_OUTPUT_QUEUE);
 
         // Read custom values
         config.customResolution = prefs.getString(CUSTOM_RESOLUTION_PREF_STRING, null);
